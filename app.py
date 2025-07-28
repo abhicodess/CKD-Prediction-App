@@ -3,7 +3,7 @@ import pickle
 import numpy as np
 
 app = Flask(__name__)
-model = pickle.load(open('CKD.pkl', 'rb'))
+model = pickle.load(open('CKD.pkl', 'rb'))  # Make sure CKD.pkl is in the same directory
 
 @app.route('/')
 def home():
@@ -19,9 +19,8 @@ def predict():
         pcc = 1 if request.form['pcc'] == 'present' else 0
         ba = 1 if request.form['ba'] == 'present' else 0
 
-        # Fill remaining 18 features with 0 (dummy for now)
-        inputs = [age, bp, rbc, pc, pcc, ba] + [0]*18
-        inputs = np.array([inputs])
+        # ✅ Only the 6 features your model was trained on
+        inputs = np.array([[age, bp, rbc, pc, pcc, ba]])
 
         result = model.predict(inputs)[0]
         msg = "CKD Detected" if result == 1 else "No CKD Detected"
@@ -31,4 +30,6 @@ def predict():
         return render_template('result.html', prediction_text=f"Error: {e}")
 
 if __name__ == '__main__':
-    app.run(debug=True)
+  app.run(debug=True)
+
+
