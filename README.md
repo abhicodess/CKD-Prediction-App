@@ -33,7 +33,7 @@ This Flask web application predicts the likelihood of Chronic Kidney Disease (CK
 - NumPy / Pandas
 - HTML5 + CSS3
 
----
+
 
 ## 🛠️ How to Run Locally
 
